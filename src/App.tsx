@@ -2,9 +2,7 @@ import * as React from "react";
 import {
   ChakraProvider,
   Box,
-  Grid,
   theme,
-  HStack,
   Container,
   Heading,
   Divider,
