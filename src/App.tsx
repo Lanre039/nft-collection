@@ -9,6 +9,8 @@ import {
   Heading,
   Divider,
   useDisclosure,
+  SimpleGrid,
+  Stack,
 } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import { NftCard } from "./components/NftCard";
@@ -38,21 +40,25 @@ export const App = () => {
         <CustomParticles color={theme.colors.current} />
         <Box paddingTop="6">
           <Container maxW="1240px">
-            <HStack margin={4} justifyContent="space-between">
+            <Stack
+              direction={["column", "row"]}
+              margin={4}
+              justifyContent="space-between"
+            >
               <Box>
-                <Heading>NFT Collections</Heading>
+                <Heading textAlign="center">NFT Collections</Heading>
               </Box>
-              <ColorModeSwitcher justifySelf="flex-end" />
-            </HStack>
+
+              <ColorModeSwitcher />
+            </Stack>
           </Container>
           <Divider my="6" />
           <Container maxW="1240px">
-            {/* <Grid minH="100vh" templateColumns="repeat(3, 1fr)"> */}
-            <Grid templateColumns="repeat(4, 1fr)">
+            <SimpleGrid columns={[1, 2, 3, 4]} spacing="10px">
               {mockdata.map((item, idx) => (
                 <NftCard key={idx} data={item} onClick={handleClick} />
               ))}
-            </Grid>
+            </SimpleGrid>
           </Container>
           <NftModal data={modalData} isOpen={isOpen} onClose={handleClose} />
         </Box>
