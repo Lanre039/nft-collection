@@ -33,34 +33,32 @@ export const App = () => {
   };
 
   return (
-    <>
-      <ChakraProvider theme={theme}>
-        <CustomParticles color={theme.colors.current} />
-        <Box paddingTop="6">
-          <Container maxW="1240px">
-            <Stack
-              direction={["column", "row"]}
-              margin={4}
-              justifyContent="space-between"
-            >
-              <Box>
-                <Heading textAlign="center">NFT Collections</Heading>
-              </Box>
+    <ChakraProvider theme={theme}>
+      <CustomParticles color={theme.colors.current} />
+      <Box paddingTop="6">
+        <Container maxW="1240px">
+          <Stack
+            direction={["column", "row"]}
+            margin={4}
+            justifyContent="space-between"
+          >
+            <Box>
+              <Heading textAlign="center">NFT Collections</Heading>
+            </Box>
 
-              <ColorModeSwitcher />
-            </Stack>
-          </Container>
-          <Divider my="6" />
-          <Container maxW="1240px">
-            <SimpleGrid columns={[1, 2, 3, 4]} spacing="10px">
-              {mockdata.map((item, idx) => (
-                <NftCard key={idx} data={item} onClick={handleClick} />
-              ))}
-            </SimpleGrid>
-          </Container>
-          <NftModal data={modalData} isOpen={isOpen} onClose={handleClose} />
-        </Box>
-      </ChakraProvider>
-    </>
+            <ColorModeSwitcher />
+          </Stack>
+        </Container>
+        <Divider my="6" />
+        <Container maxW="1240px">
+          <SimpleGrid columns={[1, 2, 3, 4]} spacing="10px">
+            {mockdata.map((item, idx) => (
+              <NftCard key={idx} data={item} onClick={handleClick} />
+            ))}
+          </SimpleGrid>
+        </Container>
+        <NftModal data={modalData} isOpen={isOpen} onClose={handleClose} />
+      </Box>
+    </ChakraProvider>
   );
 };
