@@ -1,38 +1,62 @@
-import * as React from "react"
+import * as React from "react";
 import {
   ChakraProvider,
   Box,
-  Text,
-  Link,
-  VStack,
-  Code,
   Grid,
   theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+  HStack,
+  Container,
+  Heading,
+  Divider,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { ColorModeSwitcher } from "./ColorModeSwitcher";
+import { NftCard } from "./components/NftCard";
+import { NftModal } from "./components/Modal";
+import { useState } from "react";
+import mockdata from "./mock-data.json";
+import { IData } from "./types";
+import { CustomParticles } from "./CustomParticles";
 
-export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
-  </ChakraProvider>
-)
+export const App = () => {
+  const [modalData, setModalData] = useState<IData>({} as IData);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleClick = (data: IData) => {
+    onOpen();
+    setModalData(data);
+  };
+
+  const handleClose = () => {
+    onClose();
+    setModalData({} as IData);
+  };
+
+  return (
+    <>
+      <ChakraProvider theme={theme}>
+        <CustomParticles color={theme.colors.current} />
+        <Box paddingTop="6">
+          <Container maxW="1240px">
+            <HStack margin={4} justifyContent="space-between">
+              <Box>
+                <Heading>NFT Collections</Heading>
+              </Box>
+              <ColorModeSwitcher justifySelf="flex-end" />
+            </HStack>
+          </Container>
+          <Divider my="6" />
+          <Container maxW="1240px">
+            {/* <Grid minH="100vh" templateColumns="repeat(3, 1fr)"> */}
+            <Grid templateColumns="repeat(4, 1fr)">
+              {mockdata.map((item, idx) => (
+                <NftCard key={idx} data={item} onClick={handleClick} />
+              ))}
+            </Grid>
+          </Container>
+          <NftModal data={modalData} isOpen={isOpen} onClose={handleClose} />
+        </Box>
+      </ChakraProvider>
+    </>
+  );
+};
